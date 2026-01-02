@@ -1,0 +1,75 @@
+{
+    "loginHeader": "Masuk",
+    "loginSubHeader": "Masuk ke akun Anda untuk melihat dan mengelola cerita pengalaman belajar Anda.",
+    "loginEmailHintText": "Masukkan email yang terdaftar",
+    "loginEmailValidator": "Mohon masukkan email yang telah terdaftar",
+    "loginEmailValidator2": "Mohon masukkan email yang valid",
+    "loginPasswordLabel": "Kata Sandi",
+    "loginPasswordHIntText": "Masukkan kata sandi",
+    "loginPasswordValidator": "Mohon masukkan kata sandi",
+    "loginPasswordValidator2": "Kata sandi minimal 8 karakter",
+    "loginButton": "Masuk",
+    "loginForgetPassword": "Lupa kata sandi ?",
+    "loginToRegisterText": "Belum punya akun ?",
+    "loginToRegisterButton": "Daftar",
+
+    "registerSuccessSnackbar": "Pendaftaran berhasil, silakan masuk",
+    "registerHeader": "Daftar",
+    "registerSubHeader": "Buat akun untuk melihat dan mengelola cerita pengalaman belajar Anda.",
+    "registerNameLabel": "Nama",
+    "registerNameHintText": "Masukkan nama anda",
+    "registerNameValidator": "Mohon masukkan nama lengkap",
+    "registerNameValidator2": "Nama minimal 3 karakter",
+    "registerEmailHintText": "Masukkan email anda",
+    "registerEmailValidator": "Mohon masukkan email anda",
+    "registerEmailValidator2": "Mohon maasukkan email yang valid",
+    "registerPasswordLabel": "Kata Sandi",
+    "registerPasswordHintText": "Masukkan kata sandi",
+    "registerPasswordValidator": "Mohon masukkan kata sandi",
+    "registerPasswordValidator2": "Kata sandi minimal 8 karakter",
+    "registerPasswordConfirmLabel": "Konfirmasi kata sandi",
+    "registerPasswordConfirmHintText": "Masukkan ulang kata sandi",
+    "registerPasswordConfirmValidator": "Mohon konfirmasi kata sandi",
+    "registerPasswordConfirmValidator2": "Konfirmasi kata sandi tidak cocok",
+    "registerButton": "Daftar",
+    "registerAccountExisted": "Sudah punya akun ?",
+    "registerToLoginButton": "Masuk",
+
+    "homeTitle": "Semua Cerita",
+    "homeErrNoStory": "Tidak ada cerita tersedia",
+    "homeStoryDate": "Diunggah pada {createdAt}",
+    "@homeStoryDate":{
+        "placeholders": {
+            "createdAt": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    },
+    "homeLogout": "Keluar",
+    "homeLogoutCancel": "Batal",
+    "homeLogoutConfirmContent": "Apakah Anda yakin ingin keluar?",
+
+    "detailTitle": "Cerita",
+    "detailDate": "{date} • {time}",
+    "@detailDate":{
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            },
+            "time":{
+                "type": "DateTime",
+                "format": "Hm"
+            }
+        }
+    },
+
+    "newStoryTitle": "Cerita Baru",
+    "newStoryCameraButton": "Kamera",
+    "newStoryGalleryButton": "Galeri",
+    "newStoryDescLabel": "Deskripsi",
+    "newStoryErrEmptyPic": "Gambar tidak boleh kosong",
+    "newStoryErrEmptyDesc": "Deskripsi tidak boleh kosong",
+    "newStoryButton": "Unggah"
+}
