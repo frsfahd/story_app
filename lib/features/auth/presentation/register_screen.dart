@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             duration: Duration(seconds: 2),
           ),
         );
-        context.go(AppRoutes.login);
+        context.goNamed(AppRoutes.login);
       }
     } catch (e) {
       if (!mounted) return;

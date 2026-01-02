@@ -15,7 +15,7 @@ class UserIconWidget extends StatelessWidget {
       icon: CircleAvatar(
         backgroundColor: Colors.blue,
         child: Text(
-          authProvider.user!.name[0].toUpperCase(),
+          authProvider.user?.name[0].toUpperCase() ?? "U",
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -74,8 +74,8 @@ class UserIconWidget extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              context.read<AuthProvider>().logout();
               context.pop();
+              context.read<AuthProvider>().logout();
             },
             child: Text(AppLocalizations.of(context)!.homeLogout),
           ),
