@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/providers/auth_provider.dart';
@@ -68,13 +69,13 @@ class UserIconWidget extends StatelessWidget {
         content: Text(AppLocalizations.of(context)!.homeLogoutConfirmContent),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: Text(AppLocalizations.of(context)!.homeLogoutCancel),
           ),
           TextButton(
             onPressed: () {
               context.read<AuthProvider>().logout();
-              Navigator.pop(context);
+              context.pop();
             },
             child: Text(AppLocalizations.of(context)!.homeLogout),
           ),
