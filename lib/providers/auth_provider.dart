@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_app/core/base_viewModel.dart';
@@ -38,7 +40,10 @@ class AuthProvider extends BaseViewModel {
         name: data.loginResult!.name,
         email: input.email,
       );
-      await preferences.setString(AppConstants.userDataKey, _user!.toRawJson());
+      await preferences.setString(
+        AppConstants.userDataKey,
+        jsonEncode(_user!.toJson()),
+      );
 
       setSuccess();
     } catch (e) {
@@ -89,7 +94,7 @@ class AuthProvider extends BaseViewModel {
       try {
         final preferences = await SharedPreferences.getInstance();
         final userData = preferences.getString(AppConstants.userDataKey);
-        _user = userData != null ? User.fromRawJson(userData) : null;
+        _user = userData != null ? User.fromJson(jsonDecode(userData)) : null;
       } catch (_) {
         _user = null;
       }
