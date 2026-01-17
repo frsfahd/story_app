@@ -8,10 +8,14 @@ class StoryProvider extends BaseViewModel {
   final StoryRepository _storyRepository;
   StoryProvider(this._storyRepository);
 
+  int? _pageItems = 1;
+  int? get pageItems => _pageItems;
+  int _sizeItems = 3;
+
   Story? _story;
   Story? get story => _story;
 
-  List<Story>? _listOfStory;
+  final List<Story> _listOfStory = [];
   List<Story>? get listOfStory => _listOfStory;
 
   String? _successMessage;
@@ -24,12 +28,21 @@ class StoryProvider extends BaseViewModel {
 
   Future<void> getAllStories() async {
     try {
-      setLoading();
+      if (pageItems == 1) {
+        setLoading();
+      }
 
-      final data = await _storyRepository.getAllStories();
+      final data = await _storyRepository.getAllStories(
+        page: _pageItems,
+        size: _sizeItems,
+      );
 
-      _listOfStory = data.listStory;
-
+      _listOfStory.addAll(data.listStory);
+      if (data.listStory.length < _sizeItems) {
+        _pageItems = null;
+      } else {
+        _pageItems = _pageItems! + 1;
+      }
       setSuccess();
     } catch (e) {
       final errorMsg = ExceptionHandler.getErrorMessage(e);

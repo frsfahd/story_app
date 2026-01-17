@@ -139,6 +139,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get homeLogoutConfirmContent => 'Apakah Anda yakin ingin keluar?';
 
   @override
+  String get homeNewStoryButton => 'Buat Cerita';
+
+  @override
   String get detailTitle => 'Cerita';
 
   @override

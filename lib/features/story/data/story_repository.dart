@@ -9,9 +9,12 @@ class StoryRepository {
   final ApiService _apiService;
   StoryRepository(this._apiService);
 
-  Future<ListStoryResponse> getAllStories() async {
+  Future<ListStoryResponse> getAllStories({int? page, int? size}) async {
     try {
-      final response = await _apiService.get('/stories');
+      final params = page != null && size != null
+          ? '?page=$page&size=$size'
+          : '';
+      final response = await _apiService.get('/stories$params');
       final data = response.data as Map<String, dynamic>;
 
       final result = ListStoryResponse.fromJson(data);

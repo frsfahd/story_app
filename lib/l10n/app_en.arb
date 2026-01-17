@@ -1,4 +1,5 @@
 {
+    "@@locale": "en",
     "loginHeader": "Sign In",
     "loginSubHeader": "Sign In to your account to view and manage your learning stories.",
     "loginEmailHintText": "Enter a registered email address",
@@ -12,7 +13,6 @@
     "loginForgetPassword": "Forget password ?",
     "loginToRegisterText": "don't have an account yet ?",
     "loginToRegisterButton": "Register",
-
     "registerSuccessSnackbar": "Registration successful, please sign in",
     "registerHeader": "Registration",
     "registerSubHeader": "Create an account to view and manage your learning stories.",
@@ -34,17 +34,15 @@
     "registerButton": "Register",
     "registerAccountExisted": "Already have an account ?",
     "registerToLoginButton": "Sign In",
-
     "homeTitle": "Stories",
     "homeErrNoStory": "No story available",
     "homeStoryDate": "Uploaded at {createdAt}",
     "homeLogout": "Sign Out",
     "homeLogoutCancel": "Cancel",
     "homeLogoutConfirmContent": "Are you sure you want to sign out?",
-
+    "homeNewStoryButton": "New Story",
     "detailTitle": "Story Detail",
     "detailDate": "{date} • {time}",
-
     "newStoryTitle": "New Story",
     "newStoryCameraButton": "Camera",
     "newStoryGalleryButton": "Gallery",

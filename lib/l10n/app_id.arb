@@ -1,4 +1,5 @@
 {
+    "@@locale": "id",
     "loginHeader": "Masuk",
     "loginSubHeader": "Masuk ke akun Anda untuk melihat dan mengelola cerita pengalaman belajar Anda.",
     "loginEmailHintText": "Masukkan email yang terdaftar",
@@ -12,7 +13,6 @@
     "loginForgetPassword": "Lupa kata sandi ?",
     "loginToRegisterText": "Belum punya akun ?",
     "loginToRegisterButton": "Daftar",
-
     "registerSuccessSnackbar": "Pendaftaran berhasil, silakan masuk",
     "registerHeader": "Daftar",
     "registerSubHeader": "Buat akun untuk melihat dan mengelola cerita pengalaman belajar Anda.",
@@ -34,11 +34,10 @@
     "registerButton": "Daftar",
     "registerAccountExisted": "Sudah punya akun ?",
     "registerToLoginButton": "Masuk",
-
     "homeTitle": "Semua Cerita",
     "homeErrNoStory": "Tidak ada cerita tersedia",
     "homeStoryDate": "Diunggah pada {createdAt}",
-    "@homeStoryDate":{
+    "@homeStoryDate": {
         "placeholders": {
             "createdAt": {
                 "type": "DateTime",
@@ -49,22 +48,24 @@
     "homeLogout": "Keluar",
     "homeLogoutCancel": "Batal",
     "homeLogoutConfirmContent": "Apakah Anda yakin ingin keluar?",
-
+    "homeNewStoryButton": "Buat Cerita",
+    "@homeNewStoryButton": {
+        "description": "Button to create a new story"
+    },
     "detailTitle": "Cerita",
     "detailDate": "{date} • {time}",
-    "@detailDate":{
+    "@detailDate": {
         "placeholders": {
             "date": {
                 "type": "DateTime",
                 "format": "yMMMd"
             },
-            "time":{
+            "time": {
                 "type": "DateTime",
                 "format": "Hm"
             }
         }
     },
-
     "newStoryTitle": "Cerita Baru",
     "newStoryCameraButton": "Kamera",
     "newStoryGalleryButton": "Galeri",

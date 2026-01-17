@@ -338,6 +338,12 @@ abstract class AppLocalizations {
   /// **'Apakah Anda yakin ingin keluar?'**
   String get homeLogoutConfirmContent;
 
+  /// Button to create a new story
+  ///
+  /// In id, this message translates to:
+  /// **'Buat Cerita'**
+  String get homeNewStoryButton;
+
   /// No description provided for @detailTitle.
   ///
   /// In id, this message translates to:

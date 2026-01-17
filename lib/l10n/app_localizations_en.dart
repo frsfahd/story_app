@@ -142,6 +142,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeLogoutConfirmContent => 'Are you sure you want to sign out?';
 
   @override
+  String get homeNewStoryButton => 'New Story';
+
+  @override
   String get detailTitle => 'Story Detail';
 
   @override
