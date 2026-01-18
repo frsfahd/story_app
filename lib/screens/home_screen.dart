@@ -27,9 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
-        if (context.read<StoryProvider>().pageItems != null) {
-          _loadStories();
-        }
+        _loadStories();
       }
     });
   }
@@ -51,8 +49,9 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   }
 
   void _loadStories() {
-    if (mounted) {
-      context.read<StoryProvider>().getAllStories();
+    final provider = context.read<StoryProvider>();
+    if (mounted && provider.pageItems != null) {
+      provider.getAllStories();
     }
   }
 
