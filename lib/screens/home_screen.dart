@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
 
   void _loadStories() {
     final provider = context.read<StoryProvider>();
-    if (mounted && provider.pageItems != null) {
+    if (mounted && provider.pageItems != null && !provider.isLoading) {
       provider.getAllStories();
     }
   }
@@ -58,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   @override
   void didPush() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = context.read<StoryProvider>();
+      provider.resetStories();
       _loadStories();
     });
   }
@@ -65,6 +67,8 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   @override
   void didPopNext() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = context.read<StoryProvider>();
+      provider.resetStories();
       _loadStories();
     });
   }
@@ -114,11 +118,14 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
             controller: scrollController,
             itemCount:
                 provider.listOfStory!.length +
-                (provider.pageItems != null ? 1 : 0),
+                (provider.pageItems != null && provider.listOfStory!.isNotEmpty
+                    ? 1
+                    : 0),
             itemBuilder: (context, index) {
               // display loading indicator at the end of list
               if (index == provider.listOfStory!.length &&
-                  provider.pageItems != null) {
+                  provider.pageItems != null &&
+                  provider.listOfStory!.isNotEmpty) {
                 return const Center(
                   child: Padding(
                     padding: EdgeInsets.all(8),

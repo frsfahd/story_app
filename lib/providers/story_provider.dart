@@ -26,6 +26,14 @@ class StoryProvider extends BaseViewModel {
     notifyListeners();
   }
 
+  void resetStories() {
+    _listOfStory.clear();
+    _pageItems = 1;
+    _successMessage = null;
+    clearError();
+    notifyListeners();
+  }
+
   Future<void> getAllStories() async {
     try {
       if (pageItems == 1) {
