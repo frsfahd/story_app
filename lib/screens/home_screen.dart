@@ -21,9 +21,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadStories();
-    });
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
@@ -50,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
 
   void _loadStories() {
     final provider = context.read<StoryProvider>();
-    if (mounted && provider.pageItems != null && !provider.isLoading) {
+    if (mounted && provider.pageItems != null && !provider.isFetching) {
       provider.getAllStories();
     }
   }
@@ -59,8 +56,9 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   void didPush() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<StoryProvider>();
-      provider.resetStories();
-      _loadStories();
+      if (provider.listOfStory == null || provider.listOfStory!.isEmpty) {
+        _loadStories();
+      }
     });
   }
 
@@ -118,14 +116,17 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
             controller: scrollController,
             itemCount:
                 provider.listOfStory!.length +
-                (provider.pageItems != null && provider.listOfStory!.isNotEmpty
+                (provider.pageItems != null &&
+                        provider.listOfStory!.isNotEmpty &&
+                        provider.isFetching
                     ? 1
                     : 0),
             itemBuilder: (context, index) {
               // display loading indicator at the end of list
               if (index == provider.listOfStory!.length &&
                   provider.pageItems != null &&
-                  provider.listOfStory!.isNotEmpty) {
+                  provider.listOfStory!.isNotEmpty &&
+                  provider.isFetching) {
                 return const Center(
                   child: Padding(
                     padding: EdgeInsets.all(8),

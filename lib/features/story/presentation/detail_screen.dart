@@ -113,15 +113,18 @@ class _DetailScreenState extends State<DetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Story Image
-            CachedNetworkImage(
-              imageUrl: story!.photoUrl,
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.cover,
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) =>
-                  const Icon(Icons.error, size: 100),
+            Hero(
+              tag: story!.id,
+              child: CachedNetworkImage(
+                imageUrl: story!.photoUrl,
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.error, size: 100),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),

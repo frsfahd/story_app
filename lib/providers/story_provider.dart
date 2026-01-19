@@ -12,6 +12,11 @@ class StoryProvider extends BaseViewModel {
   int? get pageItems => _pageItems;
   int _sizeItems = 3;
 
+  // Prevent concurrent fetches and duplicated items
+  bool _isFetching = false;
+  bool get isFetching => _isFetching;
+  final Set<String> _storyIds = {};
+
   Story? _story;
   Story? get story => _story;
 
@@ -28,7 +33,9 @@ class StoryProvider extends BaseViewModel {
 
   void resetStories() {
     _listOfStory.clear();
+    _storyIds.clear();
     _pageItems = 1;
+    _isFetching = false;
     _successMessage = null;
     clearError();
     notifyListeners();
@@ -36,16 +43,27 @@ class StoryProvider extends BaseViewModel {
 
   Future<void> getAllStories() async {
     try {
-      if (pageItems == 1) {
+      if (_pageItems == null || _isFetching) {
+        return;
+      }
+
+      if (_pageItems == 1) {
         setLoading();
       }
+
+      _isFetching = true;
 
       final data = await _storyRepository.getAllStories(
         page: _pageItems,
         size: _sizeItems,
       );
 
-      _listOfStory.addAll(data.listStory);
+      // Deduplicate by story id to avoid repeated heroes
+      final newStories = data.listStory
+          .where((s) => _storyIds.add(s.id))
+          .toList(growable: false);
+
+      _listOfStory.addAll(newStories);
       if (data.listStory.length < _sizeItems) {
         _pageItems = null;
       } else {
@@ -56,6 +74,8 @@ class StoryProvider extends BaseViewModel {
       final errorMsg = ExceptionHandler.getErrorMessage(e);
       setError(errorMsg);
       throw Exception(errorMsg);
+    } finally {
+      _isFetching = false;
     }
   }
 
