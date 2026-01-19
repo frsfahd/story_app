@@ -66,8 +66,12 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   void didPopNext() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<StoryProvider>();
-      provider.resetStories();
-      _loadStories();
+      // Only refresh if explicitly requested (e.g., after New Story)
+      if (provider.shouldRefreshOnReturn) {
+        provider.resetStories();
+        _loadStories();
+        provider.setRefreshOnReturn(false);
+      }
     });
   }
 
@@ -160,6 +164,9 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
           SizedBox.square(dimension: 10),
           FloatingActionButton.extended(
             onPressed: () async {
+              // Mark that we should refresh on return from New Story
+              context.read<StoryProvider>().setRefreshOnReturn(true);
+
               // Navigate to create story screen
               await context.pushNamed(AppRoutes.newStory);
 

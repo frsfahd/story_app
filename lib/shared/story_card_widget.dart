@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:story_app/core/app_routes.dart';
+import 'package:story_app/providers/story_provider.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/models/story.dart';
 
@@ -14,6 +16,9 @@ class StoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        // Returning from detail should NOT refresh
+        context.read<StoryProvider>().setRefreshOnReturn(false);
+
         // Navigate to detail screen
         context.pushNamed(
           AppRoutes.storyDetails,

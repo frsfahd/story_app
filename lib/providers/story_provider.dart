@@ -17,6 +17,13 @@ class StoryProvider extends BaseViewModel {
   bool get isFetching => _isFetching;
   final Set<String> _storyIds = {};
 
+  // Controls whether HomeScreen should refresh after a pop
+  bool _shouldRefreshOnReturn = false;
+  bool get shouldRefreshOnReturn => _shouldRefreshOnReturn;
+  void setRefreshOnReturn(bool value) {
+    _shouldRefreshOnReturn = value;
+  }
+
   Story? _story;
   Story? get story => _story;
 
