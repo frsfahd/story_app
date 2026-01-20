@@ -174,4 +174,16 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get newStoryButton => 'Unggah';
+
+  @override
+  String get newStoryLocationHint => 'Masukkan alamat anda (opsional)';
+
+  @override
+  String get mapInputSheetCancelBtn => 'Batal';
+
+  @override
+  String get mapInputSheetOkBtn => 'Tambah';
+
+  @override
+  String get mapInputSheetTitle => 'Lokasi Anda';
 }

@@ -72,5 +72,9 @@
     "newStoryDescLabel": "Deskripsi",
     "newStoryErrEmptyPic": "Gambar tidak boleh kosong",
     "newStoryErrEmptyDesc": "Deskripsi tidak boleh kosong",
-    "newStoryButton": "Unggah"
+    "newStoryButton": "Unggah",
+    "newStoryLocationHint": "Masukkan alamat anda (opsional)",
+    "mapInputSheetCancelBtn": "Batal",
+    "mapInputSheetOkBtn": "Tambah",
+    "mapInputSheetTitle": "Lokasi Anda"
 }

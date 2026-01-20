@@ -3,12 +3,15 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:story_app/core/enums.dart';
 import 'package:story_app/features/story/domain/story_schema.dart';
+import 'package:story_app/features/story/presentation/widgets/map_input_sheet.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/providers/img_provider.dart';
+import 'package:story_app/providers/map_provider.dart';
 import 'package:story_app/providers/story_provider.dart';
 
 class NewStoryScreen extends StatefulWidget {
@@ -20,18 +23,51 @@ class NewStoryScreen extends StatefulWidget {
 
 class _NewStoryScreenState extends State<NewStoryScreen> {
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  late MapProvider _mapProvider;
+  late VoidCallback _mapListener;
+  bool _bottomSheetShown = false;
 
   @override
   void initState() {
     super.initState();
-    if (mounted) {
-      context.read<ImgProvider>().resetImage();
-    }
+    context.read<ImgProvider>().resetImage();
+
+    _mapProvider = context.read<MapProvider>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _mapProvider.clearLocation();
+      _addressController.text = _mapProvider.address ?? '';
+    });
+
+    _mapListener = () {
+      if (!mounted) return;
+      final providerAddress = _mapProvider.address ?? '';
+      if (_addressController.text != providerAddress) {
+        _addressController.text = providerAddress;
+      }
+      if (_mapProvider.latLng != null && !_bottomSheetShown) {
+        _bottomSheetShown = true;
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) => MapInputSheet(),
+        ).then((_) {
+          if (mounted) {
+            _bottomSheetShown = false;
+          }
+        });
+      }
+    };
+
+    _mapProvider.addListener(_mapListener);
   }
 
   @override
   void dispose() {
+    _mapProvider.removeListener(_mapListener);
     _descriptionController.dispose();
+    _addressController.dispose();
+
     super.dispose();
   }
 
@@ -118,15 +154,25 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
     final fileName = imageFile.name;
     final bytes = await imageFile.readAsBytes();
 
+    LatLng? location;
+    if (mounted) {
+      location = context.read<MapProvider>().latLng;
+    }
+
     final newBytes = await imgProvider.compressImage(bytes);
     final StorySchema input = StorySchema(
       description: _descriptionController.text,
       photo: newBytes,
       filename: fileName,
+      lat: location?.latitude,
+      lon: location?.longitude,
     );
 
     await storyProvider.addNewStory(input);
-    if (mounted) context.pop();
+    if (mounted) {
+      _mapProvider.clearLocation();
+      context.pop();
+    }
   }
 
   @override
@@ -215,6 +261,28 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 24),
+
+            TextField(
+              controller: _addressController,
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.newStoryLocationHint,
+                suffixIcon:
+                    context.watch<MapProvider>().state == ViewState.loading
+                    ? const CircularProgressIndicator()
+                    : IconButton(
+                        onPressed: () async {
+                          if (_addressController.text != "") {
+                            await context.read<MapProvider>().setLocation(
+                              _addressController.text,
+                            );
+                          }
+                        },
+                        icon: Icon(Icons.search_rounded),
+                      ),
+              ),
+            ),
+
             const SizedBox(height: 24),
 
             // Upload Button

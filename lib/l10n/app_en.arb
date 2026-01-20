@@ -49,5 +49,9 @@
     "newStoryDescLabel": "Description",
     "newStoryErrEmptyPic": "Image must not be empty",
     "newStoryErrEmptyDesc": "Description must not be empty",
-    "newStoryButton": "Upload"
+    "newStoryButton": "Upload",
+    "newStoryLocationHint": "Enter your address (optional)",
+    "mapInputSheetCancelBtn": "Cancel",
+    "mapInputSheetOkBtn": "Add Location",
+    "mapInputSheetTitle": "Your Location"
 }

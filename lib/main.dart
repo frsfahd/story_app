@@ -8,6 +8,7 @@ import 'package:story_app/features/story/data/story_repository.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/providers/auth_provider.dart';
 import 'package:story_app/providers/localization_provider.dart';
+import 'package:story_app/providers/map_provider.dart';
 import 'package:story_app/providers/story_provider.dart';
 import 'package:story_app/providers/img_provider.dart';
 import 'package:story_app/services/api_service.dart';
@@ -39,6 +40,7 @@ class MainApp extends StatelessWidget {
           create: (context) => StoryProvider(context.read<StoryRepository>()),
         ),
         ChangeNotifierProvider(create: (_) => ImgProvider()),
+        ChangeNotifierProvider(create: (_) => MapProvider()),
       ],
       child: Builder(
         builder: (context) {

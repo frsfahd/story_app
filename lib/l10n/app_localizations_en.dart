@@ -177,4 +177,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get newStoryButton => 'Upload';
+
+  @override
+  String get newStoryLocationHint => 'Enter your address (optional)';
+
+  @override
+  String get mapInputSheetCancelBtn => 'Cancel';
+
+  @override
+  String get mapInputSheetOkBtn => 'Add Location';
+
+  @override
+  String get mapInputSheetTitle => 'Your Location';
 }

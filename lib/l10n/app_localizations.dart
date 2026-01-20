@@ -397,6 +397,30 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Unggah'**
   String get newStoryButton;
+
+  /// No description provided for @newStoryLocationHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Masukkan alamat anda (opsional)'**
+  String get newStoryLocationHint;
+
+  /// No description provided for @mapInputSheetCancelBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Batal'**
+  String get mapInputSheetCancelBtn;
+
+  /// No description provided for @mapInputSheetOkBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Tambah'**
+  String get mapInputSheetOkBtn;
+
+  /// No description provided for @mapInputSheetTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Lokasi Anda'**
+  String get mapInputSheetTitle;
 }
 
 class _AppLocalizationsDelegate
