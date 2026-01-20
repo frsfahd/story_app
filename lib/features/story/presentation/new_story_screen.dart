@@ -50,6 +50,7 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
         _bottomSheetShown = true;
         showModalBottomSheet(
           context: context,
+          isScrollControlled: true,
           builder: (BuildContext context) => MapInputSheet(),
         ).then((_) {
           if (mounted) {

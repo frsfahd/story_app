@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geocoding/geocoding.dart' as geo;
 
 import 'package:provider/provider.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/models/story.dart';
 import 'package:story_app/providers/story_provider.dart';
+import 'package:story_app/util/map_util.dart';
 
 class DetailScreen extends StatefulWidget {
   final String sid;
@@ -22,57 +21,14 @@ class _DetailScreenState extends State<DetailScreen> {
   late GoogleMapController mapController;
   final Set<Marker> markers = {};
   late Story? story;
-  geo.Placemark? placemark;
 
-  bool get _geocodingSupported {
-    // Geocoding plugin supports mobile (Android/iOS) and possibly macOS.
-    // Avoid calling on web or Linux/Windows where implementation may be missing.
-    if (kIsWeb) return false;
-    return defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS ||
-        defaultTargetPlatform == TargetPlatform.macOS;
-  }
-
-  Future<void> _setMarkerWithReverseGeocode(LatLng latLng) async {
-    if (_geocodingSupported) {
-      try {
-        final info = await geo.placemarkFromCoordinates(
-          latLng.latitude,
-          latLng.longitude,
-        );
-        final place = info.isNotEmpty ? info[0] : null;
-        final street =
-            place?.street ?? '${latLng.latitude}, ${latLng.longitude}';
-        final address = place != null
-            ? '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}'
-            : '${latLng.latitude}, ${latLng.longitude}';
-        setState(() {
-          placemark = place;
-        });
-        defineMarker(latLng, street, address);
-        return;
-      } catch (_) {}
-    }
-
-    final coordLabel = '${latLng.latitude}, ${latLng.longitude}';
-    defineMarker(latLng, coordLabel, coordLabel);
-  }
-
-  void defineMarker(LatLng latLng, String street, String address) {
-    final marker = Marker(
-      markerId: const MarkerId("story-location"),
-      position: latLng,
-      infoWindow: InfoWindow(title: street, snippet: address),
-    );
-
+  void onTapGoogleMap(LatLng latLng) async {
+    final (street, address) = await MapUtil.reverseGeocode(latLng);
+    final marker = MapUtil.defineMarker(latLng, street, address);
     setState(() {
       markers.clear();
       markers.add(marker);
     });
-  }
-
-  void onTapGoogleMap(LatLng latLng) async {
-    await _setMarkerWithReverseGeocode(latLng);
     mapController.animateCamera(CameraUpdate.newLatLng(latLng));
   }
 
@@ -189,9 +145,17 @@ class _DetailScreenState extends State<DetailScreen> {
                           zoom: 18,
                         ),
                         onMapCreated: (controller) async {
-                          await _setMarkerWithReverseGeocode(location);
+                          final (street, address) =
+                              await MapUtil.reverseGeocode(location);
+                          final marker = MapUtil.defineMarker(
+                            location,
+                            street,
+                            address,
+                          );
 
                           setState(() {
+                            markers.clear();
+                            markers.add(marker);
                             mapController = controller;
                           });
                         },
