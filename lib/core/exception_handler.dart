@@ -54,13 +54,17 @@ class ExceptionHandler {
         final statusCode = dioException.response?.statusCode;
         switch (statusCode) {
           case 400:
+            final data = dioException.response?.data;
+            String message = 'Invalid request. Please check your input.';
+            if (data is Map<String, dynamic> && data['message'] != null) {
+              message = data['message'];
+            }
             return ValidationException(
-              'Invalid request. Please check your input.',
+              message,
               code: 'BAD_REQUEST',
               details: dioException.response?.data,
             );
           case 422:
-            // Validation error from backend (Laravel style)
             final data = dioException.response?.data;
             String message = 'Validation error';
             if (data is Map<String, dynamic>) {
@@ -150,7 +154,7 @@ class ExceptionHandler {
 
   static String getErrorMessage(dynamic exception) {
     if (exception is AppException) {
-      return "${exception.message} : ${exception.details}";
+      return exception.message;
     }
 
     if (exception is DioException) {

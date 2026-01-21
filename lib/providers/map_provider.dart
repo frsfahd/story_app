@@ -33,7 +33,6 @@ class MapProvider extends BaseViewModel {
     } catch (e) {
       final errorMsg = ExceptionHandler.getErrorMessage(e);
       setError(errorMsg);
-      throw Exception(errorMsg);
     }
   }
 }

@@ -100,18 +100,26 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
 
           if (provider.isError) {
             return Center(
-              child: Text(
-                'Error: ${provider.errorMessage}',
-                style: const TextStyle(color: Colors.red),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  provider.errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                  textAlign: TextAlign.center,
+                ),
               ),
             );
           }
 
           if (provider.listOfStory == null || provider.listOfStory!.isEmpty) {
             return Center(
-              child: Text(
-                AppLocalizations.of(context)?.homeErrNoStory ??
-                    'No stories found',
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  AppLocalizations.of(context)?.homeErrNoStory ??
+                      'No stories found',
+                  textAlign: TextAlign.center,
+                ),
               ),
             );
           }

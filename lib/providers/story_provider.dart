@@ -10,7 +10,7 @@ class StoryProvider extends BaseViewModel {
 
   int? _pageItems = 1;
   int? get pageItems => _pageItems;
-  int _sizeItems = 3;
+  final int _sizeItems = 3;
 
   // Prevent concurrent fetches and duplicated items
   bool _isFetching = false;
@@ -80,7 +80,6 @@ class StoryProvider extends BaseViewModel {
     } catch (e) {
       final errorMsg = ExceptionHandler.getErrorMessage(e);
       setError(errorMsg);
-      throw Exception(errorMsg);
     } finally {
       _isFetching = false;
     }
@@ -112,7 +111,6 @@ class StoryProvider extends BaseViewModel {
     } catch (e) {
       final errorMsg = ExceptionHandler.getErrorMessage(e);
       setError(errorMsg);
-      // throw Exception(errorMsg);
     }
   }
 }

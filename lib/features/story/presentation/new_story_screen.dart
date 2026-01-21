@@ -177,6 +177,22 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
     }
   }
 
+  Future<void> _setLocation() async {
+    final provider = context.read<MapProvider>();
+    if (_addressController.text != "") {
+      await provider.setLocation(_addressController.text);
+      if (provider.errorMessage != "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Center(child: Text(provider.errorMessage)),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+        return;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -275,13 +291,7 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
                       context.watch<MapProvider>().state == ViewState.loading
                       ? const CircularProgressIndicator()
                       : IconButton(
-                          onPressed: () async {
-                            if (_addressController.text != "") {
-                              await context.read<MapProvider>().setLocation(
-                                _addressController.text,
-                              );
-                            }
-                          },
+                          onPressed: _setLocation,
                           icon: Icon(Icons.search_rounded),
                         ),
                 ),
