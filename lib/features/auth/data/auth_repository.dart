@@ -3,7 +3,6 @@ import 'package:story_app/core/exception_handler.dart';
 import 'package:story_app/features/auth/domain/login_response.dart';
 import 'package:story_app/features/auth/domain/login_schema.dart';
 import 'package:story_app/features/auth/domain/register_schema.dart';
-import 'package:story_app/models/generic_response.dart';
 import 'package:story_app/services/api_service.dart';
 
 class AuthRepository {
