@@ -142,6 +142,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get homeNewStoryButton => 'Buat Cerita';
 
   @override
+  String get detailShowMapBtn => 'Lihat Lokasi';
+
+  @override
+  String get detailShowImgBtn => 'Lihat Gambar';
+
+  @override
   String get detailTitle => 'Cerita';
 
   @override

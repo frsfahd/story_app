@@ -52,6 +52,8 @@
     "@homeNewStoryButton": {
         "description": "Button to create a new story"
     },
+    "detailShowMapBtn": "Lihat Lokasi",
+    "detailShowImgBtn": "Lihat Gambar",
     "detailTitle": "Cerita",
     "detailDate": "{date} • {time}",
     "@detailDate": {

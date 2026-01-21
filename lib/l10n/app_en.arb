@@ -41,6 +41,8 @@
     "homeLogoutCancel": "Cancel",
     "homeLogoutConfirmContent": "Are you sure you want to sign out?",
     "homeNewStoryButton": "New Story",
+    "detailShowMapBtn": "Show Location",
+    "detailShowImgBtn": "Show Image",
     "detailTitle": "Story Detail",
     "detailDate": "{date} • {time}",
     "newStoryTitle": "New Story",

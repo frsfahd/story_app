@@ -344,6 +344,18 @@ abstract class AppLocalizations {
   /// **'Buat Cerita'**
   String get homeNewStoryButton;
 
+  /// No description provided for @detailShowMapBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Lihat Lokasi'**
+  String get detailShowMapBtn;
+
+  /// No description provided for @detailShowImgBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Lihat Gambar'**
+  String get detailShowImgBtn;
+
   /// No description provided for @detailTitle.
   ///
   /// In id, this message translates to:

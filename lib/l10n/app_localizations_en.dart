@@ -145,6 +145,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeNewStoryButton => 'New Story';
 
   @override
+  String get detailShowMapBtn => 'Show Location';
+
+  @override
+  String get detailShowImgBtn => 'Show Image';
+
+  @override
   String get detailTitle => 'Story Detail';
 
   @override

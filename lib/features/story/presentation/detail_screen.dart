@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:provider/provider.dart';
+import 'package:story_app/features/story/presentation/widgets/story_img_widget.dart';
+import 'package:story_app/features/story/presentation/widgets/story_map_widget.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/models/story.dart';
 import 'package:story_app/providers/story_provider.dart';
@@ -21,6 +22,8 @@ class _DetailScreenState extends State<DetailScreen> {
   late GoogleMapController mapController;
   final Set<Marker> markers = {};
   late Story? story;
+
+  bool isMapDisplayed = false;
 
   void onTapGoogleMap(LatLng latLng) async {
     final (street, address) = await MapUtil.reverseGeocode(latLng);
@@ -42,18 +45,6 @@ class _DetailScreenState extends State<DetailScreen> {
       (s) => s.id == widget.sid,
       orElse: () => throw Exception('Story not found'),
     );
-
-    if (story!.lat != null && story!.lon != null) {
-      location = LatLng(story!.lat!, story!.lon!);
-      final marker = Marker(
-        markerId: const MarkerId("story-location"),
-        position: location,
-        onTap: () {
-          mapController.animateCamera(CameraUpdate.newLatLngZoom(location, 18));
-        },
-      );
-      markers.add(marker);
-    }
   }
 
   @override
@@ -68,19 +59,15 @@ class _DetailScreenState extends State<DetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Story Image
-            Hero(
-              tag: story!.id,
-              child: CachedNetworkImage(
-                imageUrl: story!.photoUrl,
-                width: double.infinity,
-                height: 300,
-                fit: BoxFit.cover,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) =>
-                    const Icon(Icons.error, size: 100),
-              ),
+            // Header (Image / Map)
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+              child: isMapDisplayed
+                  ? StoryMapWidget(lat: story!.lat!, lon: story!.lon!)
+                  : StoryImgWidget(id: story!.id, photoUrl: story!.photoUrl),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -115,6 +102,34 @@ class _DetailScreenState extends State<DetailScreen> {
                               style: Theme.of(context).textTheme.labelMedium
                                   ?.copyWith(color: Colors.grey[600]),
                             ),
+                            // location/image toggle button
+                            if (story!.lat != null && story!.lon != null) ...[
+                              TextButton.icon(
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: Size.zero,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
+                                onPressed: () {
+                                  setState(
+                                    () => isMapDisplayed = !isMapDisplayed,
+                                  );
+                                },
+                                label: Text(
+                                  isMapDisplayed
+                                      ? AppLocalizations.of(
+                                          context,
+                                        )!.detailShowImgBtn
+                                      : AppLocalizations.of(
+                                          context,
+                                        )!.detailShowMapBtn,
+                                ),
+                                icon: isMapDisplayed
+                                    ? Icon(Icons.image_rounded)
+                                    : Icon(Icons.location_pin),
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -130,41 +145,6 @@ class _DetailScreenState extends State<DetailScreen> {
                       context,
                     ).textTheme.bodyLarge?.copyWith(height: 1.5),
                   ),
-
-                  // Location Info (if available)
-                  if (story!.lat != null && story!.lon != null) ...[
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 250,
-                      child: GoogleMap(
-                        markers: markers,
-
-                        initialCameraPosition: CameraPosition(
-                          target: location,
-                          zoom: 18,
-                        ),
-                        onMapCreated: (controller) async {
-                          final (street, address) =
-                              await MapUtil.reverseGeocode(location);
-                          final marker = MapUtil.defineMarker(
-                            location,
-                            street,
-                            address,
-                          );
-
-                          setState(() {
-                            markers.clear();
-                            markers.add(marker);
-                            mapController = controller;
-                          });
-                        },
-                        onTap: (LatLng latLng) async {
-                          onTapGoogleMap(latLng);
-                        },
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),
