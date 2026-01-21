@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    
+    {
+      "name": "free",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main_free.dart",
+      "args": [
+        "--flavor",
+        "free"
+      ]
+    },
+    {
+      "name": "premium",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main_premium.dart",
+      "args": [
+        "--flavor",
+        "premium"
+      ]
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:story_app/core/enums.dart';
+import 'package:story_app/core/flavor_config.dart';
 import 'package:story_app/features/story/domain/story_schema.dart';
 import 'package:story_app/features/story/presentation/widgets/map_input_sheet.dart';
 import 'package:story_app/l10n/app_localizations.dart';
@@ -264,25 +265,28 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
             ),
             const SizedBox(height: 24),
 
-            TextField(
-              controller: _addressController,
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.newStoryLocationHint,
-                suffixIcon:
-                    context.watch<MapProvider>().state == ViewState.loading
-                    ? const CircularProgressIndicator()
-                    : IconButton(
-                        onPressed: () async {
-                          if (_addressController.text != "") {
-                            await context.read<MapProvider>().setLocation(
-                              _addressController.text,
-                            );
-                          }
-                        },
-                        icon: Icon(Icons.search_rounded),
-                      ),
+            // location field
+            if (FlavorConfig.instance.flavor == FlavorType.premium) ...[
+              TextField(
+                controller: _addressController,
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.newStoryLocationHint,
+                  suffixIcon:
+                      context.watch<MapProvider>().state == ViewState.loading
+                      ? const CircularProgressIndicator()
+                      : IconButton(
+                          onPressed: () async {
+                            if (_addressController.text != "") {
+                              await context.read<MapProvider>().setLocation(
+                                _addressController.text,
+                              );
+                            }
+                          },
+                          icon: Icon(Icons.search_rounded),
+                        ),
+                ),
               ),
-            ),
+            ],
 
             const SizedBox(height: 24),
 
