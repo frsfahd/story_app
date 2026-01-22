@@ -10,5 +10,6 @@ Instagram-like story app
 - [x] Implicit Animation
 - [x] Google Map (Display location and location picker)
 - [x] Code generation (Freeze & json_serializable) for objects
-- [x] Infinite scrolling with pagination    
+- [x] Infinite scrolling with pagination
+- [x] Build variant (flavor)     
 
